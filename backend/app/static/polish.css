@@ -1,0 +1,187 @@
+/* v3: accessible mobile surfaces, consistent controls and a noir home. */
+.subscription-gate { position:fixed;inset:0;z-index:10000;background:var(--bg);display:grid;place-items:center;padding:24px;overflow:auto; }
+.subscription-gate .card { width:100%;max-width:400px;padding:24px;display:grid;gap:14px; }
+.subscription-gate h2 { font-size:22px;margin:0; }
+.subscription-gate p { color:var(--muted);line-height:1.6;margin:0; }
+.subscription-gate a { text-decoration:none; }
+:root { --r-sm:12px; --r-md:18px; --r-lg:24px; }
+:root[data-theme="dark"] { --bg:#101218; --panel:#1a1d25; --panel2:#222631; --line:#383e4a; --line-soft:#2a303b; --muted:#b3bac8; --muted2:#9ba5b7; --town:#75a8ff; --town-hi:#88b4ff; }
+:root[data-theme="light"] { --bg:#f3f4f8; --muted2:#626e80; }
+body { background:var(--bg); }
+.app { background:var(--bg); }
+.screen,.gpane-inner { padding-top:max(20px,env(safe-area-inset-top)); padding-bottom:calc(110px + env(safe-area-inset-bottom)); }
+.screen.active { animation:polishIn .24s cubic-bezier(.2,.7,.2,1); }
+@keyframes polishIn { from { opacity:.35;transform:translateY(8px) } to { opacity:1;transform:none } }
+#game.screen.active { animation:none; }
+.gamepanels { scroll-behavior:auto;overscroll-behavior-x:contain; }
+.gpane.pane-in .gpane-inner { animation:none; }
+.phase-enter { animation:phaseEnter .22s cubic-bezier(.2,.7,.2,1); }
+@keyframes phaseEnter { from { opacity:.5;transform:translateY(5px) } to { opacity:1;transform:none } }
+#gameNav button { transition:background-color .2s,color .2s; }
+.title { font-size:15px;letter-spacing:.09em;color:var(--text); }
+.card { border-radius:var(--r-md);box-shadow:0 6px 20px #00000005; }
+.btn { border-radius:14px;min-height:54px;font-size:14px;letter-spacing:.015em;transition:transform .15s,background .15s; }
+.btn:not(.dark):not(.gold) { background:linear-gradient(135deg,#d9273d,#ab1328);color:#fff;border-color:#d9273d; }
+.btn.gold { background:#2863c7;color:#fff;border-color:#2863c7; }
+.btn:active:not(:disabled) { transform:scale(.985); }
+button:disabled { opacity:.55;cursor:not-allowed; }
+button,input,textarea,select { touch-action:manipulation; }
+/* Tapping a control must never leave a stray white/UA focus box around
+   it. Plain :focus alone is enough to clear the browser's default ring on
+   touch; :focus-visible (keyboard) keeps a quiet, in-button tint instead
+   of a boxy rectangle so nothing visually breaks in either theme. */
+button:focus,a:focus,input:focus,textarea:focus,select:focus { outline:none;box-shadow:none; }
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible {
+  outline:none;box-shadow:inset 0 0 0 2px var(--town-hi); }
+button::-moz-focus-inner { border:0; }
+input,textarea,select { font-size:16px!important; }
+.iconbtn { color:var(--text);border-radius:14px; }
+.nav { height:calc(68px + env(safe-area-inset-bottom));background:var(--glass-bg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px); }
+.nav button.active { background:var(--town-dim);border-radius:14px;margin:7px 4px; }
+.bottomactions { padding-bottom:max(16px,env(safe-area-inset-bottom)); }
+.connbanner { padding-top:max(10px,env(safe-area-inset-top)); }
+.chatlog { overflow-wrap:anywhere; }
+/* v3: home is a standard personal-dashboard window — the same design
+   language as the profile / cabinet screens: topbar, avatar card, then a
+   full-width list of action buttons. (The former noir hero was removed.) */
+#home { padding:22px 20px 36px; }
+#home .topbar { gap:11px;margin-bottom:18px; }
+.home-brand { width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#cf2943;color:#fff;font:800 20px/1 Georgia,serif; }
+#home .topbar .title { flex:1;text-align:left;font-size:15px;letter-spacing:.18em; }
+#home .topbar .iconbtn { width:38px;height:38px;border-radius:50%;background:transparent; }
+#home .profile-head { padding:16px;border:1px solid var(--line-soft);border-radius:var(--r-md);background:var(--panel);box-shadow:0 6px 20px #00000005;gap:14px; }
+#home .profile-joined:empty { display:none; }
+.home-section-title { font-size:10px;letter-spacing:.14em;font-weight:600;color:var(--muted);margin:22px 0 12px; }
+#home .home-menu { grid-template-columns:1fr; }
+#home .home-menu .btn { text-transform:none;letter-spacing:0; }
+@supports(height:100dvh) { .app,.screen { min-height:100dvh; } .gamepanels,.gpane { height:100dvh; } .gpane-chat .gpane-inner { height:100dvh; } }
+@media(min-width:700px) { .app { box-shadow:0 24px 80px #00000020; } }
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important;transition:none!important;scroll-behavior:auto!important; } }
+
+/* Selection controls use a neutral surface; only the chosen item is accented. */
+.btn.optbtn:not(.on),.btn.langbtn:not(.on) { background:var(--panel);color:var(--text);border-color:var(--line); }
+.btn.optbtn.on,.btn.langbtn.on { background:var(--town-dim);color:var(--text);border-color:var(--town);box-shadow:inset 3px 0 var(--town); }
+.btn.optbtn .optbtn-sub { color:var(--muted); }
+#voteList { grid-template-columns:1fr;gap:9px;margin-top:0; }
+#voteList .vote-row { width:100%;aspect-ratio:auto;min-height:68px;padding:11px 13px;display:flex;align-items:center;gap:12px;text-align:left;color:var(--text);font-family:var(--body); }
+.vote-avatar { width:42px;height:42px;flex-shrink:0;border-radius:13px;background:var(--town-dim);color:var(--town);display:grid;place-items:center;font-size:19px;font-weight:700; }
+.vote-person { flex:1;min-width:0;display:grid;gap:4px; }
+.vote-name { font-size:14px;font-weight:600;overflow-wrap:anywhere;line-height:1.35; }
+.vote-seat { font-size:10px;color:var(--muted);letter-spacing:.05em; }
+.vote-choice { width:20px;height:20px;border:2px solid var(--line);border-radius:50%;flex-shrink:0; }
+.selected .vote-choice { border:6px solid var(--town);background:var(--panel); }
+#voteList .selected { border-color:var(--town);box-shadow:0 0 0 1px var(--town);background:var(--town-dim); }
+#pg-vote .phasehead-title { font-size:14px;line-height:1.4; }
+#pg-vote .phasehead-timer { font-size:22px;flex-shrink:0; }
+#pg-vote .bottomactions { position:sticky;top:0;left:auto;right:auto;bottom:auto;width:100%;transform:none;padding:10px;margin:10px 0;background:var(--panel);border:1px solid var(--line);border-radius:18px;z-index:12;box-shadow:0 8px 26px #00000015; }
+#pg-vote .bottomactions .stack { display:grid;grid-template-columns:1.7fr 1fr;gap:8px; }
+#pg-vote .bottomactions .btn { font-size:12px;min-height:48px;padding:8px; }
+#pg-vote { padding-bottom:90px; }
+
+/* v6 — home no longer carries its own hero/2-column dashboard overrides;
+   it matches the standard cabinet windows (see the v3 block above). */
+
+/* Clear play entry, quiet secondary controls, compact mobile phases. */
+.home-play { margin-top:18px; padding:20px; display:grid; gap:10px; }
+.home-play h1 { font:700 25px/1.2 var(--body); margin:4px 0; }
+.home-play p { color:var(--muted); font-size:14px; line-height:1.5; margin:0 0 6px; }
+.home-play .smallcap { font-size:10px; color:var(--muted); }
+.quick-help { position:fixed; inset:0; z-index:11000; padding:22px; display:grid; place-items:center; background:#080b12dd; }
+.quick-help>.card { width:100%; max-width:410px; padding:24px; max-height:90dvh; overflow:auto; }
+.quick-help p { line-height:1.65; color:var(--muted); }
+.quick-help .btn { width:100%; margin-top:10px; }
+.replay-actions { margin:20px 0; }
+#spectatorLog { max-height:160px; overflow:auto; overflow-wrap:anywhere; font-size:13px; }
+#spectatorBox input,#privateNotesText { width:100%; background:var(--panel2); color:var(--text); border:1px solid var(--line); border-radius:10px; padding:10px; box-sizing:border-box; }
+#personalNotes { margin-top:14px; padding:14px; }
+#personalNotes summary { cursor:pointer; font-size:13px; margin-bottom:8px; }
+#pg-vote .phasehead { padding:14px; }
+#home .home-menu .btn { min-height:48px; }
+/* Avatar placeholders and names must remain readable in the dark lobby. */
+:root[data-theme="dark"] .pc-photo { background-color:var(--panel2); color:var(--town-hi); }
+:root[data-theme="dark"] .pc-foot { background:linear-gradient(180deg,transparent,rgba(16,18,24,.97)); }
+/* V11: one visual system across both themes. */
+:root { --r-sm:12px;--r-md:18px;--r-lg:24px; }
+:root[data-theme="dark"] { --bg:#0e1118;--panel:#181d27;--panel2:#202735;--line:#364155;--line-soft:#2b3445;--town:#85b2ff;--town-hi:#abcaff;--muted:#b8c1d1;--muted2:#a3afc3; }
+:root[data-theme="light"] { --bg:#f3f5f9;--panel:#fff;--panel2:#edf1f7;--town:#245bb6;--town-hi:#1c4c9f;--muted:#526078;--muted2:#5a6880; }
+body,button,input,textarea,select { font-family:Inter,system-ui,-apple-system,sans-serif; }
+.title,.lb-title,.gpane-title,.phasehead-title { font-family:Inter,system-ui,sans-serif;letter-spacing:.015em; }
+.lb-title { font-size:clamp(19px,5.8vw,26px);line-height:1.25; }
+.home-brand { background:#2863c7; }
+.btn:not(.dark):not(.ghost),.btn.gold { background:#2863c7;border-color:#2863c7;color:#fff;box-shadow:none; }
+.btn.dark,.btn.ghost { background:var(--panel);color:var(--text);border:1px solid var(--line); }
+.btn.danger,[data-danger="true"] { background:#b9263e!important;border-color:#b9263e!important;color:white!important; }
+.btn { min-height:48px;font-weight:600; }
+button:focus-visible,[role="button"]:focus-visible,summary:focus-visible { outline:2px solid var(--town);outline-offset:3px; }
+.pcard { border-radius:16px;overflow:hidden; }
+.pcard.host { border-color:var(--town); }
+.pc-ribbon { font-family:inherit;font-size:8px;letter-spacing:.02em;padding:4px 8px;max-width:100%;background:#2863c7;color:#fff; }
+.pc-name { font-size:12px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;cursor:pointer; }
+.pc-dot { width:7px;height:7px;box-shadow:none; }
+.pc-check { display:grid;place-items:center;width:23px;height:23px;border:1.5px solid var(--line);border-radius:50%;font:700 15px/1 Inter,sans-serif;color:transparent;background:var(--panel); }
+.pcard.selected { border-color:var(--town);box-shadow:0 0 0 2px var(--town); }
+.pcard.selected .pc-check { background:#2863c7;color:#fff;border-color:#2863c7; }
+.pcard.selected .pc-check::after { display:none; }
+.vote-choice { display:grid;place-items:center; }
+.selected .vote-choice { border:0;background:#2863c7;width:23px;height:23px; }
+.selected .vote-choice::after { content:'✓';color:white;font-size:15px; }
+#voteList .vote-row { min-height:68px; }
+.game-status { position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(100%,430px);z-index:32;background:var(--bg);border-bottom:1px solid var(--line-soft);padding:calc(12px + env(safe-area-inset-top)) 20px 12px;box-sizing:border-box; }
+.game-status-line { display:flex;align-items:center;gap:12px;font-size:12px;font-weight:600; }
+.game-status-line>span:first-child { flex:1; }
+.game-status-line>span:nth-child(2) { color:var(--muted);font-weight:400; }
+.game-status time { font-variant-numeric:tabular-nums;color:var(--town);font-size:17px; }
+.game-task { color:var(--muted);font-size:12px;line-height:1.45;margin-top:7px;min-height:18px; }
+#game .gpane-inner { padding-top:calc(112px + env(safe-area-inset-top)); }
+.phasehead { padding:14px 16px; }
+.phasehead-title { font-size:14px;line-height:1.4;text-transform:none; }
+.phasehead-timer,.phasehead.day .phasehead-timer,.phasehead.vote .phasehead-timer { color:var(--town); }
+.timer-urgent,.phasehead .phasehead-timer.timer-urgent { color:#ed5265!important; }
+#game .phasehead-timer { display:none; }
+#pg-vote .bottomactions { margin:8px 0 14px;top:0; }
+.phasehead.vote .phasehead-icon .icon,.phasehead.day .phasehead-icon .icon { color:var(--town); }
+.role-facts { margin:16px 0;display:grid;gap:0;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:0 16px; }
+.role-facts>div { padding:15px 0; }
+.role-facts>div+div { border-top:1px solid var(--line-soft); }
+.role-facts dt { color:var(--town);font-size:11px;font-weight:700;letter-spacing:.04em;margin-bottom:7px; }
+.role-facts dd { font-size:14px;line-height:1.55;margin:0;color:var(--text); }
+.rv-card { max-width:240px;margin:auto;box-shadow:none!important; }
+.rv-name { font-family:Inter,system-ui,sans-serif;font-size:28px;line-height:1.2;text-transform:none; }
+.rv-desc { font-size:14px;line-height:1.6; }
+.connbanner.show { display:flex;gap:9px;align-items:center;text-align:left;padding:12px 16px;background:var(--panel);border-bottom:1px solid var(--line);color:var(--text);box-sizing:border-box;z-index:150; }
+.connbanner>span:nth-child(2) { flex:1;font-size:12px;line-height:1.45; }
+.connbanner button { background:var(--panel2);color:var(--town);border:1px solid var(--line);border-radius:9px;padding:9px;min-height:40px;font-size:11px; }
+.connection-dot { width:8px;height:8px;border-radius:50%;background:var(--town);flex-shrink:0; }
+.connbanner[data-mode="session"] .connection-dot { background:#ed5265; }
+.personal-result { margin:16px 0;padding:20px; }
+.result-eyebrow { color:var(--muted);font-size:12px; }
+.personal-result h2 { font-size:28px;margin:8px 0; }
+.personal-result>p { color:var(--muted);font-size:13px;line-height:1.5; }
+.personal-result h3 { font-size:12px;margin-top:22px;font-weight:600; }
+.highlight-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px; }
+.highlight-grid>div { padding:13px 8px;background:var(--panel2);border-radius:12px; }
+.highlight-grid strong { display:block;color:var(--town);font-size:24px; }
+.highlight-grid span { display:block;font-size:11px;line-height:1.4;color:var(--muted);margin-top:6px; }
+#town_win,#mafia_win { padding-bottom:165px; }
+#town_win .bottomactions,#mafia_win .bottomactions { background:var(--bg);border-top:1px solid var(--line); }
+#town_win .bottomactions .stack,#mafia_win .bottomactions .stack { display:grid;grid-template-columns:1.4fr 1fr;gap:10px; }
+.winbanner,.winbanner.red,.winbanner.neutral { background:var(--panel);border-color:var(--line);box-shadow:none; }
+.winbanner-title { font-family:Inter,system-ui,sans-serif;font-size:24px;line-height:1.25; }
+.winbanner .notice { line-height:1.6;font-size:13px;color:var(--muted); }
+@media(max-width:350px) { .game-status{padding-left:14px;padding-right:14px}.game-status-line{gap:8px;font-size:11px}.highlight-grid{gap:6px}.pc-ribbon{font-size:7px}.rv-card{max-width:205px} }
+
+.statsgrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.statbox { min-width:0;overflow-wrap:anywhere; }
+.statbox b { font-size:clamp(16px,4.5vw,22px); }
+.rosterrow .smallcap { max-width:35%;overflow-wrap:anywhere;text-align:right; }
+#town_win .bottomactions,#mafia_win .bottomactions { position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,430px);padding:14px 16px calc(14px + env(safe-area-inset-bottom));box-sizing:border-box;z-index:50; }
+.statbox span { font-size:10px;letter-spacing:0;line-height:1.4; }
+.statbox b { font-size:16px; }
+.highlight-grid span { overflow-wrap:anywhere; }
+.cabinet-rolecard { display:flex;align-items:center;gap:14px;background:var(--panel); }
+.cabinet-rolecard>img,.cabinet-rolecard>svg { width:86px;height:122px;object-fit:cover;flex-shrink:0; }
+.cabinet-rolecard .cabinet-body { min-width:0;padding:12px 10px 12px 0; }
+.cabinet-rolename { font-size:22px;overflow-wrap:anywhere; }
+@media(max-width:350px) { .highlight-grid { grid-template-columns:1fr; }.highlight-grid>div { display:flex;align-items:center;gap:12px;padding:10px 12px; }.highlight-grid span { margin:0;font-size:12px; }.statbox b { font-size:14px; } }
+.cabinet-rolecard>.roleart { width:86px;min-width:86px;flex:0 0 86px; }
+.cabinet-rolecard>.roleart img { height:122px;object-fit:cover; }
