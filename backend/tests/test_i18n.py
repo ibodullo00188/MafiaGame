@@ -93,7 +93,7 @@ async def test_menu_for_includes_admin_row_only_for_admins():
 
 
 @pytest.mark.asyncio
-async def test_menu_is_minimal_and_about_renders_its_labels():
+async def test_menu_is_minimal_and_about_describes_current_game():
     labels = {b.text for row in tb.menu_for(700004, "uz").keyboard for b in row}
     # The reply keyboard is meant to stay down to exactly one button for a
     # non-admin (start_group_game) — everything else (profile, leaderboard,
@@ -107,8 +107,10 @@ async def test_menu_is_minimal_and_about_renders_its_labels():
               leaderboard=button_text("leaderboard", "en"),
               my_stats=button_text("my_stats", "en"),
               contact_admin=button_text("contact_admin", "en"))
-    assert button_text("leaderboard", "en") in about
-    assert button_text("my_stats", "en") in about
+    from app.game_engine.compositions import MIN_PLAYERS, MAX_PLAYERS
+    assert f"{MIN_PLAYERS}–{MAX_PLAYERS}" in about
+    assert "Practice does not affect rankings" in about
+    assert "{leaderboard}" not in about
     assert button_text("my_profile", "en") not in about
     assert button_text("roles", "en") not in about
 

@@ -546,3 +546,26 @@ async def test_leaderboard_ranks_by_wins_with_limit():
         assert all(row["telegram_user_id"] != 900702 for row in fresh_excluded["leaderboard"])
 
         assert (await ac.get("/leaderboard?limit=0")).status_code in (400, 422)
+
+@pytest.mark.asyncio
+async def test_copy_upgrade_preserves_custom_languages_and_is_idempotent():
+    from app.models.models import BotText
+    async with AsyncSessionLocal() as session:
+        row = (await session.execute(select(BotText).where(BotText.key == "lobby"))).scalar_one()
+        row.uz = bot_config._LEGACY_TEXT_DEFAULTS["lobby"]["uz"]
+        row.ru = "Мой собственный текст группы"
+        row.en = "Custom invitation"
+        await session.commit()
+    try:
+        await bot_config.load_config()
+        await bot_config.load_config()
+        assert bot_config.get_text("lobby", "uz") == bot_config._TEXT_FALLBACKS["lobby"]["uz"]
+        assert bot_config.get_text("lobby", "ru") == "Мой собственный текст группы"
+        assert bot_config.get_text("lobby", "en") == "Custom invitation"
+    finally:
+        async with AsyncSessionLocal() as session:
+            row = (await session.execute(select(BotText).where(BotText.key == "lobby"))).scalar_one()
+            for lang, value in bot_config._TEXT_FALLBACKS["lobby"].items():
+                setattr(row, lang, value)
+            await session.commit()
+        await bot_config.reload()

@@ -55,13 +55,10 @@ async def start_in_group(message: Message) -> None:
     me = await bot.get_me()
     webapp_url = f"https://t.me/{me.username}?startapp={chat_id}"
     keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="🎭 O'yinga qo'shilish", url=webapp_url),
+        InlineKeyboardButton(text="O‘yinga qo‘shilish", url=webapp_url),
     ]])
     await message.answer(
-        "🌙 <b>MAFIA</b> boshlanmoqda!\n\n"
-        "Qo'shilish uchun quyidagi tugmani bosing.\n"
-        "Kamida <b>6</b> kishi yig'ilsa, o'yinni boshlash mumkin bo'ladi.\n"
-        "<b>25</b> kishi to'lsa — o'yin avtomatik boshlanadi.",
+        '🎭 <b>MAFIA · O‘yinchilar yig‘ilmoqda</b>\n\nBir rol. Bir sir. Har bir ovoz muhim.\n\n<b>4–20 o‘yinchi</b>\n4 kishi yig‘ilgach, xona egasi o‘yinni boshlaydi. 20 kishida o‘yin avtomatik boshlanadi.\n\n<i>Quyidagi tugma orqali kutish xonasiga kiring.</i>',
         reply_markup=keyboard,
     )
 
@@ -69,9 +66,7 @@ async def start_in_group(message: Message) -> None:
 @dp.message(Command("start"), F.chat.type == ChatType.PRIVATE)
 async def start_in_private(message: Message) -> None:
     await message.answer(
-        "👋 Salom! Bu bot guruh o'yinlari uchun.\n\n"
-        "Meni biror guruhga qo'shing va o'sha yerda <code>/start</code> buyrug'ini yuboring — "
-        "a'zolar qo'shiladigan tugma paydo bo'ladi."
+        '🎭 <b>MAFIA · Har bir qaror muhim</b>\n\nKimga ishonasiz? Do‘stlaringiz bilan sirli rollar, tungi qarorlar va kunduzgi bahslarga qo‘shiling.\n\n<b>Birinchi o‘yinni boshlash</b>\n1. Botni guruhingizga qo‘shing.\n2. Guruhda <code>/start</code> yuboring.\n3. O‘yin havolasi orqali birga kiring.\n\n<i>4–20 o‘yinchi · Rol tasodifiy beriladi</i>'
     )
 
 

@@ -57,7 +57,7 @@ function proGameStatus(s) {
  const el=document.getElementById('gameStatus');if(!el)return;
  const phase=s.phase,me=s.me||{};
  const number=phase==='night'||phase==='morning'?s.night_number:s.day_number;
- const task=!me.alive? 'observe':phase==='night'?(me.has_submitted_night_action?'wait':me.night_action_type?'pick':'noAction'):phase==='day_discussion'?'discuss':phase==='voting'?(me.has_voted?'voteAccepted':'pick'):phase==='lynch_confirmation'?(me.has_lynch_confirmed?'accepted':'confirm'):phase==='kamikaze_strike'?(me.kamikaze_striker?'pick':'wait'):'report';
+ const task=phase==='kamikaze_strike'&&me.kamikaze_striker?'pick':!me.alive? 'observe':phase==='night'?(me.has_submitted_night_action?'wait':me.night_action_type?'pick':'noAction'):phase==='day_discussion'?'discuss':phase==='voting'?(me.has_voted?'voteAccepted':'pick'):phase==='lynch_confirmation'?(me.has_lynch_confirmed?'accepted':'confirm'):phase==='kamikaze_strike'?(me.kamikaze_striker?'pick':'wait'):'report';
  el.innerHTML=`<div class="game-status-line"><span>${escapeHtml(proText(phase))}${number?' '+number:''}</span><span>${s.players.filter(p=>p.alive).length} ${proText('alive')}</span><time id="unifiedTimer">—</time></div><div class="game-task">${escapeHtml(proText(task))}</div>`;
 }
 function proPlayerDetails(id) {

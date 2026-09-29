@@ -353,9 +353,9 @@ GROUP_GAME_COMMANDS = [
 # Shown for a repeat /start (or the private group-picker) while a match —
 # lobby/gathering included — is already running for that group.
 GAME_ALREADY_ACTIVE_MESSAGE = (
-    "⚠️ Hurmatli o'yinchilar, ushbu guruhda allaqachon o'yin ketmoqda. "
-    "Yangi o'yin boshlash uchun amaldagi bahs tugashini kuting yoki "
-    "o'yinni bekor qilish uchun /stop buyrug'idan foydalaning."
+    "🎭 <b>O‘yin davom etmoqda</b>\n\n"
+    "Guruhdagi o‘yin havolasi orqali kirishingiz mumkin. "
+    "Yangi davra uchun hozirgi o‘yin yakunlanishini kuting."
 )
 
 
@@ -443,7 +443,7 @@ async def post_join_button(chat_id: int) -> Message:
         return await get_bot().send_message(chat_id, GAME_ALREADY_ACTIVE_MESSAGE)
 
     keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="🎭 O'yinga qo'shilish", url=webapp_url),
+        InlineKeyboardButton(text="O‘yinga qo‘shilish", url=webapp_url),
     ]])
     # The lobby message is admin-editable (Bot matnlari module, "Lobby
     # xabari"). Group-shared by nature, so it always renders in Uzbek, just
@@ -470,8 +470,8 @@ async def start_in_group(message: Message) -> None:
         logger.exception("start_in_group failed for chat %s", message.chat.id)
         try:
             await message.answer(
-                "⚠️ <b>O'yinni boshlashda xatolik yuz berdi.</b>\n"
-                f"<i>{escape(str(e)[:300])}</i>"
+                "<b>O‘yin hozircha ochilmadi</b>\n\n"
+                "Birozdan so‘ng /start yuborib qayta urinib ko‘ring."
             )
         except Exception:
             logger.exception("Could not even post the /start error message")
@@ -536,15 +536,13 @@ async def stop_in_group(message: Message) -> None:
     try:
         await _force_stop_game(engine)
         await message.answer(
-            "🛑 <b>O'yin to'xtatildi.</b>\n\n"
-            "Amaldagi bahs bekor qilindi va guruh yangi o'yin uchun bo'shatildi. "
-            "Yangi o'yin boshlash uchun /start buyrug'ini yuboring."
+            "<b>O‘yin to‘xtatildi</b>\n\n"
+            "Bu davra bekor qilindi. Yangi o‘yin uchun /start yuboring."
         )
     except Exception as e:
         logger.exception("stop_in_group failed for chat %s", chat_id)
         await message.answer(
-            "⚠️ O'yinni to'xtatishda xatolik yuz berdi.\n"
-            f"<i>{escape(str(e)[:300])}</i>"
+            "<b>O‘yin to‘xtatilmadi</b>\n\nBirozdan so‘ng /stop yuborib qayta urinib ko‘ring."
         )
 
 

@@ -227,6 +227,8 @@ Object.assign(I18N.uz, {lobby_title:"KUTISH XONASI",lobby_host_badge:"XONA EGASI
 Object.assign(I18N.ru, {lobby_title:"КОМНАТА ОЖИДАНИЯ",lobby_host_badge:"ВЕДУЩИЙ",pro_messages:"СООБЩЕНИЯ",pro_winners:"ПОБЕДИТЕЛИ",pro_others:"ОСТАЛЬНЫЕ ИГРОКИ"});
 Object.assign(I18N.en, {lobby_title:"WAITING ROOM",lobby_host_badge:"HOST",pro_messages:"MESSAGES",pro_winners:"WINNERS",pro_others:"OTHER PLAYERS"});
 
+installExperienceCopy();
+
 function t(key) {
   const dict = I18N[currentLang] || I18N.uz;
   return dict[key] !== undefined ? dict[key] : (I18N.uz[key] || "");
@@ -330,7 +332,7 @@ const ACTIVITY_I18N = {
   "night.begins": { emoji: "\ud83c\udf19",
     uz: "Tun boshlandi.", ru: "\u041d\u0430\u0447\u0430\u043b\u0430\u0441\u044c \u043d\u043e\u0447\u044c.", en: "Night has begun." },
   "morning.begins": { emoji: "\ud83c\udf05",
-    uz: "Ertalab boshlandi — tungi natijalar e'lon qilinadi.", ru: "\u041d\u0430\u0447\u0430\u043b\u043e\u0441\u044c \u0443\u0442\u0440\u043e \u2014 \u043e\u0431\u044a\u044f\u0432\u043b\u044f\u044e\u0442\u0441\u044f \u043d\u043e\u0447\u043d\u044b\u0435 \u0438\u0442\u043e\u0433\u0438.", en: "Morning has begun — the night's results are announced." },
+    uz: "Tong otdi. Tungi natijalar tayyor.", ru: "\u041d\u0430\u0447\u0430\u043b\u043e\u0441\u044c \u0443\u0442\u0440\u043e \u2014 \u043e\u0431\u044a\u044f\u0432\u043b\u044f\u044e\u0442\u0441\u044f \u043d\u043e\u0447\u043d\u044b\u0435 \u0438\u0442\u043e\u0433\u0438.", en: "Morning has begun — the night's results are announced." },
   "day.begins": { emoji: "\u2600\ufe0f",
     uz: "Kun boshlandi.", ru: "\u041d\u0430\u0447\u0430\u043b\u0441\u044f \u0434\u0435\u043d\u044c.", en: "Day has begun." },
   "voting.begins": { emoji: "\u2696\ufe0f",
@@ -342,35 +344,35 @@ const ACTIVITY_I18N = {
   "voting.resolved": { emoji: "\u2696\ufe0f",
     uz: "Ovoz berish yakunlandi.", ru: "\u0413\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u043d\u0438\u0435 \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043d\u043e.", en: "Voting has been resolved." },
   "lynch.confirmation_begins": { emoji: "\u2694\ufe0f",
-    uz: "Osib o'ldirishni tasdiqlash boshladi.", ru: "\u041d\u0430\u0447\u0430\u043b\u043e\u0441\u044c \u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043d\u0438\u0435 \u043a\u0430\u0437\u043d\u0438 \u0447\u0435\u0440\u0435\u0437 \u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u043d\u0438\u0435.", en: "Lynch confirmation has begun." },
+    uz: "Nomzod bo‘yicha hukmni tasdiqlash boshlandi.", ru: "\u041d\u0430\u0447\u0430\u043b\u043e\u0441\u044c \u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043d\u0438\u0435 \u043a\u0430\u0437\u043d\u0438 \u0447\u0435\u0440\u0435\u0437 \u0433\u043e\u043b\u043e\u0441\u043e\u0432\u0430\u043d\u0438\u0435.", en: "Lynch confirmation has begun." },
   "kamikaze.strike_begins": { emoji: "\ud83d\udca5",
-    uz: "Kamikadze zarbasi boshladi.", ru: "\u041d\u0430\u0447\u0430\u043b\u0441\u044f \u0443\u0434\u0430\u0440 \u043a\u0430\u043c\u0438\u043a\u0430\u0434\u0437\u0435.", en: "The kamikaze strike has begun." },
+    uz: "Kamikaze so‘nggi nishonni tanlamoqda.", ru: "\u041d\u0430\u0447\u0430\u043b\u0441\u044f \u0443\u0434\u0430\u0440 \u043a\u0430\u043c\u0438\u043a\u0430\u0434\u0437\u0435.", en: "The kamikaze strike has begun." },
   "lynch.cancelled": { emoji: "\u2694\ufe0f",
     uz: "Shahar jazoni bekor qildi — hech kim osilmadi.", ru: "\u0413\u043e\u0440\u043e\u0434 \u043e\u0442\u043c\u0435\u043d\u0438\u043b \u043a\u0430\u0437\u043d\u044c \u2014 \u043d\u0438\u043a\u0442\u043e \u043d\u0435 \u043f\u043e\u0432\u0435\u0448\u0435\u043d.", en: "The town cancelled the lynch \u2014 nobody was hanged." },
   "night.resolved": { emoji: "\ud83c\udf19",
-    uz: "Tungi harakatlar hal qilindi.", ru: "\u041d\u043e\u0447\u043d\u044b\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044f \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u044b.", en: "Night actions have been resolved." },
+    uz: "Tungi harakatlar yakunlandi.", ru: "\u041d\u043e\u0447\u043d\u044b\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044f \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u044b.", en: "Night actions have been resolved." },
   "night.mafia.kill_target_selected": { emoji: "\ud83d\udd2a",
     uz: "Mafiya nishon tanladi.", ru: "\u041c\u0430\u0444\u0438\u044f \u0432\u044b\u0431\u0440\u0430\u043b\u0430 \u0446\u0435\u043b\u044c.", en: "Mafia chose a target." },
   "night.mafia.kill_skipped": { emoji: "\ud83d\udd2a",
     uz: "Mafiya bu kecha hujum qilmaslikni tanladi.", ru: "\u041c\u0430\u0444\u0438\u044f \u0440\u0435\u0448\u0438\u043b\u0430 \u043d\u0435 \u0430\u0442\u0430\u043a\u043e\u0432\u0430\u0442\u044c \u0441\u0435\u0433\u043e\u0434\u043d\u044f.", en: "Mafia chose not to attack tonight." },
   "night.commissioner.investigated": { emoji: "\ud83d\udd0e",
-    uz: "Komissar tekshiruv o'tkazdi.", ru: "\u041a\u043e\u043c\u0438\u0441\u0441\u0430\u0440 \u043f\u0440\u043e\u0432\u0451\u043b \u0440\u0430\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0438\u0435.", en: "An investigation was performed." },
+    uz: "Komissar tekshiruv uchun nishon tanladi.", ru: "\u041a\u043e\u043c\u0438\u0441\u0441\u0430\u0440 \u043f\u0440\u043e\u0432\u0451\u043b \u0440\u0430\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0438\u0435.", en: "An investigation was performed." },
   "night.commissioner.kill_selected": { emoji: "\ud83d\udd2b",
     uz: "Komissar o'qqa tutdi.", ru: "\u041a\u043e\u043c\u0438\u0441\u0441\u0430\u0440 \u043e\u0442\u043a\u0440\u044b\u043b \u043e\u0433\u043e\u043d\u044c.", en: "The commissioner opened fire." },
   "night.doctor.protected": { emoji: "\ud83e\ude7a",
-    uz: "Doktor kimnidir himoya qildi.", ru: "\u0414\u043e\u043a\u0442\u043e\u0440 \u043a\u043e\u0433\u043e-\u0442\u043e \u0437\u0430\u0449\u0438\u0442\u0438\u043b.", en: "Doctor went to protect someone." },
+    uz: "Doktor himoya uchun nishon tanladi.", ru: "\u0414\u043e\u043a\u0442\u043e\u0440 \u043a\u043e\u0433\u043e-\u0442\u043e \u0437\u0430\u0449\u0438\u0442\u0438\u043b.", en: "Doctor went to protect someone." },
   "night.maniac.kill_target_selected": { emoji: "\ud83d\udd2b",
     uz: "Maniyak nishon tanladi.", ru: "\u041c\u0430\u043d\u044c\u044f\u043a \u0432\u044b\u0431\u0440\u0430\u043b \u0446\u0435\u043b\u044c.", en: "The maniac chose a target." },
   "night.maniac.kill_skipped": { emoji: "\ud83d\udd2b",
     uz: "Maniyak bu kecha hujum qilmaslikni tanladi.", ru: "\u041c\u0430\u043d\u044c\u044f\u043a \u0440\u0435\u0448\u0438\u043b \u043d\u0435 \u0430\u0442\u0430\u043a\u043e\u0432\u0430\u0442\u044c.", en: "The maniac chose not to attack tonight." },
   "night.mistress.blocked": { emoji: "\ud83d\udc8b",
-    uz: "Bekorchi tun bo'ldi — kimningdir harakati bloklandi.", ru: "\u0411\u044b\u043b\u0430 \u043f\u0443\u0441\u0442\u0430\u044f \u043d\u043e\u0447\u044c \u2014 \u0447\u044c\u0435-\u0442\u043e \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u0431\u044b\u043b\u043e \u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u0430\u043d\u043e.", en: "Someone's action was blocked tonight." },
+    uz: "Xonim tungi harakat uchun nishon tanladi.", ru: "\u0411\u044b\u043b\u0430 \u043f\u0443\u0441\u0442\u0430\u044f \u043d\u043e\u0447\u044c \u2014 \u0447\u044c\u0435-\u0442\u043e \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u0431\u044b\u043b\u043e \u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u0430\u043d\u043e.", en: "Someone's action was blocked tonight." },
   "night.vagabond.watched": { emoji: "\ud83d\udc41",
-    uz: "Sayyoh kuzaatib turdi.", ru: "\u0421\u0442\u0440\u0430\u043d\u043d\u0438\u043a \u0432\u0451\u043b \u043d\u0430\u0431\u043b\u044e\u0434\u0435\u043d\u0438\u0435.", en: "A watch action was performed." },
+    uz: "Sayyoh kuzatish uchun nishon tanladi.", ru: "\u0421\u0442\u0440\u0430\u043d\u043d\u0438\u043a \u0432\u0451\u043b \u043d\u0430\u0431\u043b\u044e\u0434\u0435\u043d\u0438\u0435.", en: "A watch action was performed." },
   "night.lawyer.shielded": { emoji: "\u2696\ufe0f",
     uz: "Advokat mijozini tanladi.", ru: "\u0410\u0434\u0432\u043e\u043a\u0430\u0442 \u0432\u044b\u0431\u0440\u0430\u043b \u043a\u043b\u0438\u0435\u043d\u0442\u0430.", en: "The lawyer picked a client." },
   "night.generic.action_submitted": { emoji: "\u2694\ufe0f",
-    uz: "Bir harakat amalga oshirildi.", ru: "\u0411\u044b\u043b\u043e \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u043e \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435.", en: "An action was performed." },
+    uz: "Tungi tanlov qabul qilindi.", ru: "\u0411\u044b\u043b\u043e \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u043e \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435.", en: "An action was performed." },
 };
 
 function activityLine(entry) {
@@ -391,17 +393,17 @@ function renderActivityFeed(containerId, feed, phase, number) {
   const segment = (feed || []).filter((e) => e.phase === phase && e.phase_number === number);
   if (segment.length === 0) {
     el.innerHTML = `
-      <div class="activityfeed-head"><span class="livedot"></span>JONLI FAOLIYAT</div>
-      <div class="activityfeed-empty">Hozircha hech qanday faoliyat yo'q...</div>`;
+      <div class="activityfeed-head"><span class="livedot"></span>${uxText("events")}</div>
+      <div class="activityfeed-empty">${uxText("emptyEvents")}</div>`;
     return;
   }
   const rows = segment.slice().reverse().map((e) => {
     const line = activityLine(e);
     if (!line) return "";
-    return `<div class="activityfeed-row"><span class="activityfeed-emoji">${line.emoji}</span><span>${escapeHtml(line.text)}</span></div>`;
+    return `<div class="activityfeed-row"><span class="activityfeed-emoji">${activityIcon(e.message_key)}</span><span>${escapeHtml(line.text)}</span></div>`;
   }).join("");
   el.innerHTML = `
-    <div class="activityfeed-head"><span class="livedot"></span>JONLI FAOLIYAT</div>
+    <div class="activityfeed-head"><span class="livedot"></span>${uxText("events")}</div>
     <div class="activityfeed-list">${rows}</div>`;
 }
 
@@ -409,6 +411,7 @@ function applyLanguage(lang) {
   currentLang = I18N[lang] ? lang : "uz";
   const dict = I18N[currentLang];
   applyProLanguage();
+  applyExperienceLanguage();
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     if (dict[el.getAttribute("data-i18n")] !== undefined) el.textContent = dict[el.getAttribute("data-i18n")];
   });
@@ -468,7 +471,7 @@ async function boot() {
     // Opened outside Telegram (e.g. a plain browser). The rest of the app
     // needs a verified Telegram identity, so it stops here rather than
     // pretending to be a real session.
-    toast("Bu ilova faqat Telegram ichida, guruhdagi tugma orqali ochiladi.");
+    toast(uxText("connectionHint"));
     return;
   }
 
@@ -737,7 +740,7 @@ function setConnBanner(show) {
 let toastTimer = null;
 function toast(msg) {
   const el = document.getElementById("toast");
-  el.textContent = msg;
+  el.textContent = uxError(msg);
   el.classList.add("show");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.classList.remove("show"), 3200);
@@ -1056,23 +1059,7 @@ async function openLeaderboard() {
   }
 }
 
-const ABOUT_BODY = {
-  uz: `<h3>Mafia guruh boti haqida</h3>
-    <p>Bu o'yin Telegram guruhi ichida o'tkaziladi. Guruhga botni qo'shib, <b>/start</b> yuboring — "Anda" tugmasi paydo bo'ladi.</p>
-    <p>Rollar faqat o'yin davomida ko'rinadi. Kechaning qorong'usida mafiya o'ldiradi, doktor himoya qiladi, komissar tergov qiladi...</p>
-    <p>Botning ko'k <b>Menu</b> tugmasi orqali shaxsiy kabinet ochiladi: statistika, reyting va o'yinlar tarixi.</p>
-    <p>Har bir tugagan o'yin umumiy reytingda hisoblanadi. Eng yaxshi o'yinchilar "Top / Reyting" bo'limida ko'rinadi.</p>`,
-  ru: `<h3>О боте Mafia</h3>
-    <p>Игра проходит прямо внутри Telegram-группы. Добавьте бота в группу и отправьте <b>/start</b> — появится кнопка «Анда».</p>
-    <p>Роли видны только во время игры. Ночью мафия убивает, доктор лечит, комиссар расследует...</p>
-    <p>Через синюю кнопку <b>Menu</b> бота открывается личный кабинет: статистика, рейтинг и история игр.</p>
-    <p>Каждая завершённая игра идёт в общий рейтинг. Лучшие игроки — в разделе «Топ / Рейтинг».</p>`,
-  en: `<h3>About the Mafia bot</h3>
-    <p>The game is played inside a Telegram group. Add the bot to your group and send <b>/start</b> — the "Anda" button will appear.</p>
-    <p>Roles are only visible during a game. At night the mafia kills, the doctor heals, the commissioner investigates...</p>
-    <p>The bot's blue <b>Menu</b> button opens your personal dashboard: statistics, ratings and game history.</p>
-    <p>Every finished game counts towards the global leaderboard. The best players appear in "Top / Ratings".</p>`,
-};
+const ABOUT_BODY = EXPERIENCE_ABOUT;
 
 function openAbout() {
   go("about");
@@ -1380,6 +1367,7 @@ function renderCabinet(s) {
 
   if (phase === "night" && me.night_action_type && !me.has_submitted_night_action) {
     actionBox.innerHTML = buildCabinetNightAction(s, me);
+    setCabinetCompMode(me.commissioner_can_shoot ? cabinetCommissionerMode : "check");
   } else {
     const message=!me.alive?'observe':phase==='night'?(me.has_submitted_night_action?'wait':'noAction'):'discuss';
     actionBox.innerHTML=`<div class="cabinet-noaction"><b>${proText(me.has_submitted_night_action?'accepted':'yourRole')}</b><span>${proText(message)}</span></div>`;
@@ -1400,8 +1388,8 @@ function buildCabinetNightAction(s, me) {
     if (me.commissioner_can_shoot) {
       commissionerToggle = `
         <div style="display:flex;gap:8px;margin-bottom:10px">
-          <button class="btn dark comp-mode" style="min-height:42px;flex:1" id="cabCompCheck" onclick="setCabinetCompMode('check')">🔎 ${proText("investigate")}</button>
-          <button class="btn town comp-mode" style="min-height:42px;flex:1" id="cabCompShoot" onclick="setCabinetCompMode('shoot')">🔫 ${proText("shoot")}</button>
+          <button class="btn dark comp-mode" style="min-height:42px;flex:1" id="cabCompCheck" onclick="setCabinetCompMode('check')">${proText("investigate")}</button>
+          <button class="btn town comp-mode" style="min-height:42px;flex:1" id="cabCompShoot" onclick="setCabinetCompMode('shoot')">${proText("shoot")}</button>
         </div>
         <p id="cabCompShootNote" style="display:none;margin:0 0 10px;font-size:12px;color:var(--red-hi);font-weight:600">${proText("commissionerLimit")}</p>`;
     } else {
@@ -1862,13 +1850,13 @@ function renderMafiaChatPanel(s) {
   const teammatesEl = document.getElementById("mafiaTeammates");
   const names = (s.me.mafia_teammates || []).map((pid) => nameFor(s, pid)).filter(Boolean);
   teammatesEl.textContent = names.length
-    ? `Hamkasblaringiz: ${names.join(", ")}`
-    : "Boshqa mafiya a'zosi yo'q.";
+    ? `${uxText("teammates")}: ${names.join(", ")}`
+    : uxText("noTeammates");
 
   const log = document.getElementById("mafiaChatLog");
   log.innerHTML = chat.length
     ? chat.map((m) => chatMessageHtml(s, m)).join("")
-    : `<div class="chatempty">Hali xabar yo'q.</div>`;
+    : `<div class="chatempty">${uxText("mafiaEmpty")}</div>`;
   if (chat.length !== lastMafiaChatLen) {
     log.scrollTop = log.scrollHeight;
     lastMafiaChatLen = chat.length;
@@ -1902,6 +1890,7 @@ function sendMafiaChatMessage() { sendInput("mafia_chat_message", "mafiaChatInpu
 // --------------------------------------------------------- night screen --
 
 function renderNightScreen(s) {
+  renderNightGuidance(s);
   const me = s.me || {};
   startCountdown(s.phase_ends_in, ["nightTimer"]);
 
@@ -1909,7 +1898,7 @@ function renderNightScreen(s) {
   const titleEl = document.getElementById("nightPhaseTitle");
   if (titleEl) titleEl.textContent = `${t("night_title")} ${s.night_number}`;
   const subEl = document.getElementById("nightPhaseSub");
-  if (subEl) subEl.textContent = "Hamma ko'zini yumdi. Rolingizga mos harakatni tanlang.";
+  if (subEl) subEl.textContent = uxText("nightIntro");
 
   // Live anonymous activity feed (items 2-4/11/16-18): renders regardless
   // of whether this player has already acted, and keeps updating on every
@@ -1920,30 +1909,30 @@ function renderNightScreen(s) {
   selectedTarget = null;
 
   if (me.has_submitted_night_action) {
-    document.getElementById("nightActionLabel").textContent = "YUBORILDI";
+    document.getElementById("nightActionLabel").textContent = uxText("actionSaved");
     box.innerHTML = `
       <div class="actionstatus">
         <svg class="icon"><use href="#i-shield"/></svg>
         <div>
-          <div class="actionstatus-title">Harakat yuborildi</div>
-          <div class="actionstatus-sub">Boshqalar hali harakat qilmoqda. Tashqi kuzatuv davom etmoqda...</div>
+          <div class="actionstatus-title">${uxText("actionSaved")}</div>
+          <div class="actionstatus-sub">${uxText("actionWait")}</div>
         </div>
       </div>`;
     return;
   }
 
   if (!me.night_action_type) {
-    document.getElementById("nightActionLabel").textContent = "TUNGI HARAKAT";
+    document.getElementById("nightActionLabel").textContent = proText("nightAction");
     if (me.alive && me.faction === "mafia") {
       // Balance fix: only the Don (or his successor) performs the kill.
-      box.innerHTML = `<div class="waitnote">Bu kecha siz o'ldirmaysiz — o'ldirishni Don (yoki uning merosxo'ri) amalga oshiradi. Mafiya chatida muhokama qiling.</div>`;
+      box.innerHTML = `<div class="waitnote">${uxText("mafiaWait")}</div>`;
     } else {
-      box.innerHTML = `<div class="waitnote"><span class="dotpulse"></span>Sizning rolingiz tungi harakatga ega emas. Tinch uxlang.</div>`;
+      box.innerHTML = `<div class="waitnote"><span class="dotpulse"></span>${uxText("noNight")}</div>`;
     }
     return;
   }
 
-  document.getElementById("nightActionLabel").textContent = "TANLANG";
+  document.getElementById("nightActionLabel").textContent = proText("pick");
 
   // Roles whose action can also be explicitly skipped with no target
   // (feature item 8) — Mafia's "I choose not to attack tonight".
@@ -1958,7 +1947,7 @@ function renderNightScreen(s) {
   const targets = (me.can_target_self ? pool : pool.filter((p) => p.player_id !== myPlayerId)).filter(p => !me.is_mafia_killer || !(me.mafia_teammates || []).includes(p.player_id));
 
   if (targets.length === 0) {
-    box.innerHTML = `<div class="waitnote"><span class="dotpulse"></span>Hozircha nishon yo'q.</div>${skipBtnHtml}`;
+    box.innerHTML = `<div class="waitnote"><span class="dotpulse"></span>${proText("noTarget")}</div>${skipBtnHtml}`;
     return;
   }
 
@@ -1970,7 +1959,7 @@ function renderNightScreen(s) {
         selectable: true, onSelect: "selectNightTarget",
       })).join("")}
     </div>
-    <button class="btn" style="margin-top:14px" id="nightConfirmBtn" disabled onclick="confirmNightAction(selectedTarget)">Tanlashni tasdiqlash</button>
+    <button class="btn" style="margin-top:14px" id="nightConfirmBtn" disabled onclick="confirmNightAction(selectedTarget)">${proText("confirmAction")}</button>
     ${skipBtnHtml}`;
 }
 
@@ -1999,7 +1988,7 @@ function confirmNightAction(targetId) {
 function renderMorningScreen(s) {
   startCountdown(s.phase_ends_in, ["morningTimer"]);
   const titleEl = document.getElementById("morningPhaseTitle");
-  if (titleEl) titleEl.textContent = `TUN ${s.night_number} — NATIJA`;
+  if (titleEl) titleEl.textContent = `${proText("morning")} · ${proText("night")} ${s.night_number}`;
   renderActivityFeed("morningActivityFeed", s.activity_feed, "morning", s.night_number);
 
   const me = s.me || {};
@@ -2021,8 +2010,8 @@ function renderMorningScreen(s) {
   } else {
     cards = `<div class="card" style="text-align:center;padding:22px;margin-top:10px">
       <div style="font-size:26px">&#127748;</div>
-      <div style="font-weight:700;margin-top:6px">Hammasi tinch o'tdi</div>
-      <p class="subtitle" style="margin-top:4px">Bu kecha hech kim o'lmadi.</p>
+      <div style="font-weight:700;margin-top:6px">${uxText("peaceful")}</div>
+      <p class="subtitle" style="margin-top:4px">${uxText("noDeaths")}</p>
     </div>`;
   }
 
@@ -2079,10 +2068,10 @@ function renderLynchScreen(s) {
         <div class="avatar" style="${avatarStyle(target)}">${!target.avatar_url ? avatarInitial(target) : ""}</div>
         <div style="flex:1;min-width:0">
           <div class="result-name" style="font-size:19px">${escapeHtml(target.display_name)}</div>
-          <div class="subtitle" style="text-align:left;margin-top:2px;font-size:12.5px">Eng ko'p ovozni shu yig'di. Uni o'ldiramizmi?</div>
+          <div class="subtitle" style="text-align:left;margin-top:2px;font-size:12.5px">${uxText("verdictHint")}</div>
         </div>
       </div>`
-    : `<div class="card" style="text-align:center;padding:20px">Hech kim belgilanmagan.</div>`;
+    : `<div class="card" style="text-align:center;padding:20px">${uxText("noCandidate")}</div>`;
 
   const yesBtn = document.getElementById("lynchYesBtn");
   const noBtn = document.getElementById("lynchNoBtn");
@@ -2095,7 +2084,7 @@ function renderLynchScreen(s) {
   } else if (me.has_lynch_confirmed) {
     if (yesBtn) yesBtn.disabled = true;
     if (noBtn) noBtn.disabled = true;
-    if (status) status.textContent = "Ovozingiz qabul qilindi. Boshqalar ovoz bermoqda...";
+    if (status) status.textContent = t("ballot_received");
   } else {
     if (yesBtn) yesBtn.disabled = false;
     if (noBtn) noBtn.disabled = false;
@@ -2110,7 +2099,7 @@ function submitLynchConfirm(yes) {
   const status = document.getElementById("lynchStatus");
   if (yesBtn) yesBtn.disabled = true;
   if (noBtn) noBtn.disabled = true;
-  if (status) status.textContent = "Ovozingiz qabul qilindi. Boshqalar ovoz bermoqda...";
+  if (status) status.textContent = uxText("sending");
 }
 
 // ------------------------------------------------------ kamikaze strike --
@@ -2130,8 +2119,8 @@ function renderKamikazeScreen(s) {
     box.innerHTML = `
       <div class="card" style="text-align:center;padding:22px">
         <div style="font-size:26px">&#128165;</div>
-        <div style="font-weight:700;margin-top:6px">Kamikadze yakuniy tanlov qilmoqda</div>
-        <p class="subtitle" style="margin-top:4px">Osilgan Kamikadze o'zi bilan bitta o'yinchini olib ketishi mumkin. Buni kuzatib turing...</p>
+        <div style="font-weight:700;margin-top:6px">${proText("kamikaze_strike")}</div>
+        <p class="subtitle" style="margin-top:4px">${uxText("kamikazeWait")}</p>
       </div>`;
     return;
   }
@@ -2190,12 +2179,13 @@ function renderDayScreen(s) {
   const me = s.me || {};
   const btn = document.getElementById("toVoteBtn");
   if (btn) {
+    btn.disabled = !me.alive;
     btn.classList.toggle("ready", !!me.ready_for_vote);
-    btn.textContent = me.ready_for_vote ? "Kutilmoqda..." : "Tayyor";
+    btn.textContent = me.ready_for_vote ? uxText("undoReady") : uxText("readyVote");
   }
   const progress = document.getElementById("readyProgress");
   if (progress) {
-    progress.textContent = `${s.ready_count || 0}/${s.alive_count || 0} tayyor`;
+    progress.textContent = `${s.ready_count || 0}/${s.alive_count || 0} ${uxText("readyCount")}`;
   }
 }
 
@@ -2227,10 +2217,10 @@ function chatMessageHtml(s, m) {
     const reasonText = deathReasonUz(p.reason);
     const victimRoleMeta = p.victim_role ? (roleByApiName[p.victim_role] || null) : null;
     const roleLine = victimRoleMeta
-      ? `<div class="cd-line"><span class="cd-lbl">Roli</span><span>${escapeHtml(victimRoleMeta.name)}</span></div>`
+      ? `<div class="cd-line"><span class="cd-lbl">${proText("yourRole")}</span><span>${escapeHtml(proRoleName(p.victim_role))}</span></div>`
       : "";
     return `<div class="chatmsg chat-system chat-death">
-      <div class="chatname">☠ O'LIM</div>
+      <div class="chatname">${uxText("eliminated")}</div>
       <div class="chattext">
         <div class="cd-title">${victimName}</div>
         <div class="cd-line">${reasonText}</div>
@@ -2240,7 +2230,7 @@ function chatMessageHtml(s, m) {
   }
   if (kind === "last_words") {
     return `<div class="chatmsg chat-system chat-lastwords">
-      <div class="chatname">💬 SO'NGGI SO'Z — ${escapeHtml(m.display_name)} †</div>
+      <div class="chatname">${uxText("lastWords")} · ${escapeHtml(m.display_name)} †</div>
       <div class="chattext">“${escapeHtml(m.text)}”</div>
     </div>`;
   }
@@ -2254,12 +2244,12 @@ function chatMessageHtml(s, m) {
   if (kind === "vote") {
     const p = m.payload || {};
     const voterName = escapeHtml(p.voter_name || (p.voter_id ? nameFor(s, p.voter_id) : "") || m.display_name);
-    const targetName = escapeHtml(p.target_name || nameFor(s, p.target_id) || "");
+    const targetName = escapeHtml(p.target_id ? (p.target_name || nameFor(s, p.target_id)) : t("ballot_skip"));
     return `<div class="chatvote">
       <span class="cv-voter">${voterName}</span>
       <span class="cv-arrow">➜</span>
       <span class="cv-target">${targetName}</span>
-      <span class="cv-word">ovoz berdi</span>
+      <span class="cv-word">${uxText("voted")}</span>
     </div>`;
   }
   const sender = s.players.find((p) => p.player_id === m.player_id);
@@ -2278,7 +2268,7 @@ function renderChat(s) {
   renderSpectator(s);
 
   if (chat.length === 0) {
-    log.innerHTML = `<div class="chatempty">Hali xabar yo'q. Muhokamani boshlang.</div>`;
+    log.innerHTML = `<div class="chatempty">${uxText("chatEmpty")}</div>`;
   } else {
     log.innerHTML = chat.map((m) => chatMessageHtml(s, m)).join("");
   }
@@ -2299,16 +2289,16 @@ function renderChat(s) {
     mode = "last_words";
     html = `
       <div class="lastwords-box">
-        <div class="smallcap">SO'NGGI SO'Z</div>
+        <div class="smallcap">${uxText("lastWords")}</div>
         <textarea id="chatLastWordsInput" maxlength="200" rows="2"
-          placeholder="Oxirgi so'zingizni yozing..."></textarea>
-        <button class="btn gold" onclick="submitChatLastWords()">Yuborish</button>
+          placeholder="${uxText("lastWordsHint")}"></textarea>
+        <button class="btn gold" onclick="submitChatLastWords()">${proText("send")}</button>
       </div>`;
   } else if (me.can_chat) {
     mode = "chat";
     html = `
       <div class="chatinputrow">
-        <input class="chatinput" id="chatInput" maxlength="500" placeholder="Xabar yozing..."
+        <input class="chatinput" id="chatInput" maxlength="500" placeholder="${t("chat_placeholder")}"
           onkeydown="if(event.key==='Enter')sendChatMessage()">
         <button class="chatsend" onclick="sendChatMessage()"><svg class="icon" style="width:17px;height:17px;stroke:#fff"><use href="#i-send"/></svg></button>
       </div>`;
@@ -2444,11 +2434,11 @@ function renderOutcomeScreen(s, opts) {
   if (opts.kind === "night") {
     const deaths = s.last_night_deaths || [];
     titleEl.textContent = "TUN NATIJASI";
-    introEl.textContent = deaths.length ? "Shahar kimnidir yo'qotdi..." : "Bu kecha hech kim o'lmadi.";
+    introEl.textContent = deaths.length ? "Shahar kimnidir yo'qotdi..." : uxText("noDeaths");
     if (deaths.length === 0) {
       heroEl.style.backgroundImage = "";
       heroEl.style.aspectRatio = "auto";
-      heroEl.innerHTML = `<div class="card" style="text-align:center;padding:28px">Hammasi tinch o'tdi.</div>`;
+      heroEl.innerHTML = `<div class="card" style="text-align:center;padding:28px">${uxText("peaceful")}.</div>`;
     } else {
       const first = deaths[0];
       const roleMeta = roleCardFor(first.player_id);
@@ -2529,17 +2519,17 @@ function renderOutcomeScreen(s, opts) {
     // to leave a final message; everyone else just sees it once submitted.
     if (victim.last_words) {
       wordsHtml = `<div class="card" style="margin-top:14px">
-        <div class="smallcap">SO'NGGI SO'Z</div>
+        <div class="smallcap">${uxText("lastWords")}</div>
         <div style="margin-top:8px;font-style:italic;color:var(--text);line-height:1.5">\u201C${escapeHtml(victim.last_words)}\u201D</div>
         <div style="margin-top:5px;color:var(--muted2);font:600 12px var(--ui)">\u2014 ${escapeHtml(victim.display_name)}</div>
       </div>`;
     } else if (s.me && s.me.player_id === result.eliminated) {
       wordsHtml = `<div class="card" style="margin-top:14px">
         <div class="smallcap">SO'NGGI SO'Z <span id="lastWordsTimer" style="float:right;color:var(--red-hi)"></span></div>
-        <textarea id="lastWordsInput" maxlength="200" rows="2" placeholder="Oxirgi so'zingizni yozing..."
+        <textarea id="lastWordsInput" maxlength="200" rows="2" placeholder="${uxText("lastWordsHint")}"
           style="width:100%;margin-top:8px;background:var(--panel2);border:1px solid var(--line-soft);
           border-radius:10px;color:var(--text);padding:10px;font:13px var(--body);resize:none"></textarea>
-        <button class="btn gold" style="margin-top:8px" onclick="submitLastWords()">Yuborish</button>
+        <button class="btn gold" style="margin-top:8px" onclick="submitLastWords()">${proText("send")}</button>
       </div>`;
     }
   }
@@ -3831,7 +3821,7 @@ async function startPractice() {
 function joinFromHome() {
   if (gameId && currentState && currentState.phase !== "game_over") { render(); return; }
   if (currentChatId()) { enterLobby(); return; }
-  showHelpPanel("Do‘stlar bilan o‘ynash", "Botni Telegram guruhingizga qo‘shing. Guruhda /start yuboring va o‘yinga kirish tugmasini bosing. Kamida 4 kishi kerak.");
+  showHelpPanel(uxText("friendsTitle"), uxText("friendsBody"));
 }
 function showHelpPanel(title, text) {
   document.getElementById("quickHelp")?.remove();

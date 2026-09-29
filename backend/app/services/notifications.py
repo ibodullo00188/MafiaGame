@@ -36,8 +36,8 @@ _dm_retry_after: dict[int, float] = {}
 ROLE_LABELS = {
     "Citizen": "Tinch aholi", "Commissioner": "Komissar",
     "Sergeant": "Serjant", "Doctor": "Doktor", "Lucky": "Omadli",
-    "Kamikaze": "Qasoskor", "Don": "Don", "Mafia": "Mafia",
-    "Maniac": "Yakka o‘yinchi", "Mistress": "Xonim", "Lawyer": "Advokat",
+    "Kamikaze": "Kamikaze", "Don": "Don", "Mafia": "Mafiya",
+    "Maniac": "Yakka qotil", "Mistress": "Xonim", "Lawyer": "Advokat",
     "Suicide": "Ayyor", "Vagabond": "Sayyoh",
 }
 
@@ -49,7 +49,7 @@ def role_label(player) -> str:
 
 def start_message(state) -> str:
     counts = Counter(role_label(p) for p in state.players.values())
-    return "♠️ <b>O‘yin boshlandi</b>\n\n<b>Tarqatilgan rollar</b>\n" + "\n".join(
+    return "🎭 <b>MAFIA · O‘yin boshlandi</b>\n\nRolingizni ilovada oching. Uni sir saqlang.\n\n<b>Tarqatilgan rollar</b>\n" + "\n".join(
         f"• {escape(role)} — {count}" for role, count in sorted(counts.items())
     )
 
@@ -59,12 +59,12 @@ def end_message(state) -> str:
     faction = winner.faction.value if winner.faction else None
     label = FACTION_LABELS.get(faction, "Yakka g‘alaba" if winner.winners else "Durang")
     winners = set(winner.winners + winner.individual_winners)
-    lines = ["🏆 <b>O‘yin tugadi!</b>", f"Natija: <b>{label}</b>",
-             f"👥 Ishtirokchilar: {len(state.players)} · Kun: {state.day_number}", ""]
+    lines = ["🏆 <b>MAFIA · O‘yin yakunlandi</b>", f"Natija: <b>{label}</b>",
+             f"Ishtirokchilar: {len(state.players)} · Kun: {state.day_number}", ""]
     for pid, player in state.players.items():
         badge = "🏆" if pid in winners else "•"
         lines.append(f"{badge} {escape(player.display_name[:40])} — {escape(role_label(player))}")
-    lines.extend(["", "Yangi o‘yin uchun /start"])
+    lines.extend(["", "<i>Yana bir davra? Guruhda /start yuboring.</i>"])
     return "\n".join(lines)
 
 # game_id -> player_id -> how many of that player's state.outcome_messages
@@ -104,15 +104,15 @@ def public_event_message(event: dict) -> str:
     kind, d = event["type"], event.get("data", {})
     name = lambda key: escape(str(d.get(key + "_name", "O‘yinchi")))
     if kind == "phase_night":
-        return f"🌙 <b>{event['night']}-tun boshlandi</b>\nTungi rollar o‘z vazifasini bajaradi."
+        return f"🌙 <b>{event['night']}-tun boshlandi</b>\n\nRolingizdagi harakatni tanlang. Tungi tanlovlar maxfiy."
     if kind == "phase_morning":
-        return f"🌅 <b>{event['night']}-tun yakunlandi</b>\nTong otdi."
+        return f"🌅 <b>{event['night']}-tun yakunlandi</b>\n\nTungi voqealar bilan tanishing. Muhokama tez orada boshlanadi."
     if kind == "phase_day":
-        return f"☀️ <b>{event['day']}-kun — muhokama</b>\nFikrlaringizni o‘yinning chatida yozing."
+        return f"☀️ <b>{event['day']}-kun — muhokama</b>\n\nDalillaringizni o‘yin chatida yozing. Kimga va nima uchun shubha qilyapsiz?"
     if kind == "phase_voting":
-        return f"🗳 <b>{event['day']}-kun — ovoz berish</b>\nHar kim bir marta ovoz beradi. Ovozlar ochiq."
+        return f"🗳 <b>{event['day']}-kun — ovoz berish</b>\n\nNomzodni tanlang va tasdiqlang. Ovoz ochiq; shu bosqichda uni o‘zgartirib bo‘lmaydi."
     if kind == "phase_revote":
-        return "🔁 <b>Ovozlar teng!</b>\nTeng ovoz olgan nomzodlar orasida qayta ovoz beriladi."
+        return "🔁 <b>Ovozlar teng</b>\n\nTeng ovoz olgan nomzodlar orasida qayta ovoz beriladi."
     if kind == "public_vote":
         choice = name("target_id") if d.get("target_id") else "Betaraf"
         return f"🗳 <b>{event['day']}-kun · Ovoz</b>\n{name('voter_id')} ➜ <b>{choice}</b>"
@@ -121,7 +121,7 @@ def public_event_message(event: dict) -> str:
                   "day_vote": "kunduzgi hukm", "kamikaze": "Kamikaze zarbasi", "removed_by_admin": "admin qarori"}
         reason = ", ".join(causes.get(x, "o‘yin hodisasi") for x in str(d.get("reason", "")).split("/"))
         role = "\nRoli: <b>" + escape(ROLE_LABELS.get(d["role"], d["role"])) + "</b>" if d.get("role") else ""
-        return f"☠️ <b>O‘yinchi o‘yindan chiqdi</b>\n{name('player_id')}\nSabab: {reason}{role}"
+        return f"◻️ <b>O‘yinchi o‘yindan chiqdi</b>\n\n{name('player_id')}\nSabab: {reason}{role}"
     if kind == "phase_lynch_confirmation":
         return "⚖️ <b>Hukmni tasdiqlash</b>\nTanlangan nomzod bo‘yicha Ha / Yo‘q ovozini bering."
     if kind == "phase_kamikaze_strike":
@@ -168,7 +168,7 @@ async def notify_group_if_phase_changed(engine) -> None:
         else:
             return
         if text:
-            text += f"\n\n<code>MAFIA · {escape(str(state.game_id))}</code>"
+            text += f"\n\n<i>MAFIA · {escape(str(state.game_id))}</i>"
         link = None
         if flag or (event and event["type"] in ("phase_night", "phase_day", "phase_voting", "phase_revote")):
             link = await group_return_link(state.chat_id)
@@ -244,7 +244,7 @@ async def notify_players_outcome_messages(engine) -> None:
         if monotonic() < _dm_retry_after.get(player.telegram_user_id, 0):
             continue
         line = new_lines[0]
-        if await send_telegram_message(player.telegram_user_id, escape(line)):
+        if await send_telegram_message(player.telegram_user_id, "🎭 <b>Shaxsiy xabar</b>\n\n" + escape(line) + "\n\n<i>Bu xabar faqat sizga ko‘rinadi.</i>"):
             sent[player_id] = already_sent + 1
             _dm_retry_after[player.telegram_user_id] = monotonic() + 1.2
             from app.services.checkpoint_service import save_checkpoint

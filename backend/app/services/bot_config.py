@@ -32,13 +32,14 @@ from sqlalchemy import select
 
 from app.database import AsyncSessionLocal
 from app.models.models import AdminUser, BotButton, BotText
+from app.bot_copy import BOT_TEXTS as _TEXT_FALLBACKS
 
 # The three admin-editable bot texts (spec section titled "Bot matnlari").
 # Every other bot message deliberately stays code-level.
 MANAGED_TEXTS = ("start", "group_added", "lobby")
 
-# Fallback text when a BotText row is missing or a language has no value.
-_TEXT_FALLBACKS: dict[str, dict[str, str]] = {
+# Previous stock text, used only to upgrade untouched saved defaults.
+_LEGACY_TEXT_DEFAULTS: dict[str, dict[str, str]] = {
     "start": {
         "uz": "🎭 <b>MAFIA BOT</b>\n"
               "▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n"
@@ -153,9 +154,13 @@ async def load_config() -> None:
     # the backing store is empty/fresh while the process cache is already
     # flagged as loaded (e.g. a test session that swapped in a new engine).
     async with AsyncSessionLocal() as session:
-        existing_texts = {
-            row.key for row in (await session.execute(select(BotText))).scalars().all()
-        }
+        text_rows = (await session.execute(select(BotText))).scalars().all()
+        existing_texts = {row.key for row in text_rows}
+        # Upgrade untouched stock copy per language; preserve every custom value.
+        for row in text_rows:
+            for lang, old in _LEGACY_TEXT_DEFAULTS.get(row.key, {}).items():
+                if getattr(row, lang) == old:
+                    setattr(row, lang, _TEXT_FALLBACKS[row.key][lang])
         for key in MANAGED_TEXTS:
             if key not in existing_texts:
                 row = BotText(

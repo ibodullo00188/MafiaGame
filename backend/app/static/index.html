@@ -744,7 +744,7 @@ html,body,.app,.card,.status-row,.row,.phasehead,.calloutcard,.nav,
 }
 </style>
 
-<link rel="stylesheet" href="/static/polish.css?v=11">
+<link rel="stylesheet" href="/static/polish.css?v=12">
 </head>
 <body>
 <script>
@@ -866,8 +866,8 @@ html,body,.app,.card,.status-row,.row,.phasehead,.calloutcard,.nav,
 <div class="gpane-inner" id="gameInner">
 
 <div class="swipe-strip">
-  <span onclick="scrollToPane('chat')"><svg class="icon" style="width:12px;height:12px"><use href="#i-chevleft"/></svg> Xabarlar</span>
-  <span onclick="scrollToPane('cabinet')">Rolim <svg class="icon" style="width:12px;height:12px;transform:rotate(180deg)"><use href="#i-chevleft"/></svg></span>
+  <span onclick="scrollToPane('chat')"><svg class="icon" style="width:12px;height:12px"><use href="#i-chevleft"/></svg> <b data-i18n="pro_messages">Xabarlar</b></span>
+  <span onclick="scrollToPane('cabinet')"><b data-i18n="role_fab">Rolim</b> <svg class="icon" style="width:12px;height:12px;transform:rotate(180deg)"><use href="#i-chevleft"/></svg></span>
 </div>
 
 <!-- MORNING -->
@@ -877,7 +877,7 @@ html,body,.app,.card,.status-row,.row,.phasehead,.calloutcard,.nav,
     <div class="phasehead-icon"><svg class="icon"><use href="#i-sun"/></svg></div>
     <div>
       <div class="phasehead-title" id="morningPhaseTitle">TUN NATIJASI</div>
-      <div class="phasehead-sub" id="morningPhaseSub">Ertalab boshlandi — natijalar e'lon qilinadi.</div>
+      <div class="phasehead-sub" id="morningPhaseSub" data-ux="morningIntro">Ertalab boshlandi — natijalar e'lon qilinadi.</div>
     </div>
   </div>
   <div class="phasehead-timer" id="morningTimer">00:00</div>
@@ -905,10 +905,7 @@ html,body,.app,.card,.status-row,.row,.phasehead,.calloutcard,.nav,
 <div class="activityfeed" id="nightActivityFeed"></div>
 <div id="nightActionLabel" style="display:none"></div>
 <div id="nightAction" style="display:none"></div>
-<div class="calloutcard" style="margin-top:14px">
-  <div class="smallcap">HARAKATINGIZ</div>
-  <p style="margin-top:6px;font-size:13px">Rolingizning maxsus harakatini o'ngdagi kabinetingizdan bajaring.</p>
-</div>
+<div class="calloutcard" id="nightGuidance" style="margin-top:14px"></div>
 </div>
 
 <!-- DAY -->
@@ -918,7 +915,7 @@ html,body,.app,.card,.status-row,.row,.phasehead,.calloutcard,.nav,
     <div class="phasehead-icon"><svg class="icon"><use href="#i-sun"/></svg></div>
     <div>
       <div class="phasehead-title" id="dayPhaseTitle">DAY 1</div>
-      <div class="phasehead-sub" id="dayPhaseSub">Hamma uyg'ondi! Kimni gumon qilasiz?</div>
+      <div class="phasehead-sub" id="dayPhaseSub" data-ux="dayIntro">Hamma uyg'ondi! Kimni gumon qilasiz?</div>
     </div>
   </div>
   <div class="phasehead-timer" id="dayTimer">00:00</div>
@@ -958,7 +955,7 @@ html,body,.app,.card,.status-row,.row,.phasehead,.calloutcard,.nav,
     <div class="phasehead-icon"><svg class="icon"><use href="#i-crown"/></svg></div>
     <div>
       <div class="phasehead-title" id="lynchPhaseTitle">OSIB O'LDIRISH</div>
-      <div class="phasehead-sub" id="lynchPhaseSub">Shahar hukmini chiqardi. Tasdiqlaysizmi?</div>
+      <div class="phasehead-sub" id="lynchPhaseSub" data-ux="verdictHint">Shahar hukmini chiqardi. Tasdiqlaysizmi?</div>
     </div>
   </div>
   <div class="phasehead-timer" id="lynchTimer">00:00</div>
@@ -966,8 +963,8 @@ html,body,.app,.card,.status-row,.row,.phasehead,.calloutcard,.nav,
 <div class="activityfeed" id="lynchActivityFeed"></div>
 <div id="lynchTargetCard" style="margin-top:14px"></div>
 <div class="bottomactions"><div class="stack">
-  <button class="btn" style="background:var(--panel);border-color:var(--line);color:var(--text)" id="lynchNoBtn" onclick="submitLynchConfirm(false)">YO&rsquo;Q &mdash; shubha bor</button>
-  <button class="btn gold" id="lynchYesBtn" onclick="submitLynchConfirm(true)">HA &mdash; o&rsquo;ldirishni tasdiqlash</button>
+  <button class="btn" style="background:var(--panel);border-color:var(--line);color:var(--text)" id="lynchNoBtn" onclick="submitLynchConfirm(false)" data-ux="verdictNo">YO&rsquo;Q &mdash; shubha bor</button>
+  <button class="btn danger" id="lynchYesBtn" onclick="submitLynchConfirm(true)" data-ux="verdictYes">HA &mdash; o&rsquo;ldirishni tasdiqlash</button>
   <div id="lynchStatus" style="text-align:center;font-size:13px;opacity:.75;margin-top:4px"></div>
 </div></div>
 </div>
@@ -979,7 +976,7 @@ html,body,.app,.card,.status-row,.row,.phasehead,.calloutcard,.nav,
     <div class="phasehead-icon"><svg class="icon"><use href="#i-skull"/></svg></div>
     <div>
       <div class="phasehead-title" id="kamikazePhaseTitle">KAMIKADZE ZARBASI</div>
-      <div class="phasehead-sub" id="kamikazePhaseSub">Kamikadze o'zi bilan kimni olib ketadi?</div>
+      <div class="phasehead-sub" id="kamikazePhaseSub" data-ux="kamikazeWait">Kamikadze o'zi bilan kimni olib ketadi?</div>
     </div>
   </div>
   <div class="phasehead-timer" id="kamikazeTimer">00:00</div>
@@ -1013,7 +1010,7 @@ html,body,.app,.card,.status-row,.row,.phasehead,.calloutcard,.nav,
 <div class="gpane-inner">
   <div class="gpane-head">
     <div class="gpane-swipehint" onclick="scrollToPane('game')"><svg class="icon"><use href="#i-chevleft"/></svg></div>
-    <div class="gpane-title">ROLINGIZ</div>
+    <div class="gpane-title" data-pro="yourRole">Rolingiz</div>
     <span class="spacer44"></span>
   </div>
   <div id="cabinetRoleCard"></div>
@@ -1318,7 +1315,7 @@ html,body,.app,.card,.status-row,.row,.phasehead,.calloutcard,.nav,
     <div class="chatlog" id="mafiaChatLog" style="max-height:40vh"></div>
     <div id="mafiaChatInputArea">
       <div class="chatinputrow">
-        <input class="chatinput" id="mafiaChatInput" maxlength="500" placeholder="Mafiyaga yozing..." onkeydown="if(event.key==='Enter')sendMafiaChatMessage()">
+        <input class="chatinput" data-ux-placeholder="teamPlaceholder" id="mafiaChatInput" maxlength="500" placeholder="Mafiyaga yozing..." onkeydown="if(event.key==='Enter')sendMafiaChatMessage()">
         <button class="chatsend" style="background:var(--red-hi)" onclick="sendMafiaChatMessage()"><svg class="icon" style="width:17px;height:17px;stroke:#fff"><use href="#i-send"/></svg></button>
       </div>
     </div>
@@ -1340,6 +1337,7 @@ html,body,.app,.card,.status-row,.row,.phasehead,.calloutcard,.nav,
 </div>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="/static/professional.js?v=11"></script>
-<script src="/static/app.js?v=11"></script>
+<script src="/static/professional.js?v=12"></script>
+<script src="/static/experience.js?v=12"></script>
+<script src="/static/app.js?v=12"></script>
 </body></html>

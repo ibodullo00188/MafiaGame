@@ -1,3 +1,5 @@
+> **V12:** The current game supports **4–20 players and 13 roles**. See [V12 changes](UPDATE_V12_UZ.md) and [V11 changes](UPDATE_V11_UZ.md). The historical implementation notes below describe earlier versions.
+
 # Mafia Telegram Mini App
 
 A group social-deduction game: the bot lives in a Telegram group, one

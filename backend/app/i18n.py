@@ -159,75 +159,90 @@ MESSAGES: dict[str, dict[str, str]] = {
         "ru": "Используйте меню снизу:",
         "en": "Use the menu below:",
     },
-    "command_not_understood": {
-        "uz": "Buyruq tushunilmadi. Pastdagi menyudan foydalaning:",
-        "ru": "Команда не распознана. Используйте меню снизу:",
-        "en": "I didn't understand that. Use the menu below:",
-    },
-    "about_body": {
-        "uz": "🎭 <b>Mafia Mini App</b>\n\n"
-              "Guruhlaringizda 6 dan 25 tagacha o'yinchi bilan Mafia o'ynang — "
-              "kechasi maxfiy harakatlar, kunduzi muhokama va ovoz berish.\n\n"
-              "Boshlash uchun meni istalgan guruhga admin qilib qo'shing va "
-              "o'sha yerda <code>/start</code> yuboring.\n\n"
-              "👤 Profilingiz va statistika — pastdagi \"Mening profilim\" "
-              "tugmasi yoki <code>/profile</code> orqali ochiladigan ilova ichida.\n\n"
-              "{start_group_game} — guruhga chiqmasdan, shu yerdan o'yin havolasini yuborish\n"
-              "{leaderboard} — eng yaxshi o'yinchilar reytingi\n"
-              "{my_stats} — shaxsiy statistikangiz\n"
-              "{contact_admin} — bot admini bilan bog'lanish",
-        "ru": "🎭 <b>Mafia Mini App</b>\n\n"
-              "Играйте в Мафию в своих группах — от 6 до 25 игроков, тайные "
-              "ночные действия, дневные обсуждения и голосование.\n\n"
-              "Чтобы начать, добавьте меня администратором в любую группу и "
-              "отправьте там <code>/start</code>.\n\n"
-              "👤 Ваш профиль и статистика — через кнопку «Мой профиль» ниже "
-              "или командой <code>/profile</code>.\n\n"
-              "{start_group_game} — отправить ссылку на игру прямо отсюда\n"
-              "{leaderboard} — рейтинг лучших игроков\n"
-              "{my_stats} — ваша личная статистика\n"
-              "{contact_admin} — связаться с администратором бота",
-        "en": "🎭 <b>Mafia Mini App</b>\n\n"
-              "Play Mafia in your groups — 6 to 25 players, secret night "
-              "actions, day discussion and voting.\n\n"
-              "To start, add me as an admin to any group and send "
-              "<code>/start</code> there.\n\n"
-              "👤 Your profile and stats — via the \"My profile\" button below "
-              "or the <code>/profile</code> command.\n\n"
-              "{start_group_game} — send the game link right from here\n"
-              "{leaderboard} — ranking of the best players\n"
-              "{my_stats} — your personal stats\n"
-              "{contact_admin} — contact the bot's admin",
-    },
-    "rules_body": {
-        "uz": "📜 <b>O'yin qoidalari</b>\n\n"
-              "Har bir o'yinchi tunda maxfiy rol oladi: <b>Tinch aholi</b>, "
-              "<b>Mafiya</b> yoki maxsus rollar (Komissar, Shifokor va h.k.).\n\n"
-              "🌙 <b>Kecha</b> — maxsus rollar o'z harakatini yashirincha bajaradi "
-              "(mafiya o'ldiradi, shifokor davolaydi, komissar tekshiradi).\n"
-              "☀️ <b>Kun</b> — hamma muhokama qiladi va tundagi voqeani aniqlashga harakat qiladi.\n"
-              "🗳 <b>Ovoz berish</b> — eng ko'p ovoz olgan o'yinchi o'yindan chiqariladi.\n\n"
-              "🏆 <b>G'alaba:</b> Tinch aholi barcha mafiyalarni chiqarib yuborsa — "
-              "shahar g'alaba qiladi. Mafiya soni tinch aholiga teng yoki ko'p bo'lsa — "
-              "mafiya g'alaba qiladi.\n\n"
-              "Har bir rolning batafsil tavsifi o'yin ichida, \"Rollar\" bo'limida.",
-        "ru": "📜 <b>Правила игры</b>\n\n"
-              "Каждый игрок тайно получает роль: <b>Мирный житель</b>, "
-              "<b>Мафия</b> или особая роль (Комиссар, Доктор и т.д.).\n\n"
-              "🌙 <b>Ночь</b> — особые роли тайно совершают свои действия.\n"
-              "☀️ <b>День</b> — все обсуждают и пытаются вычислить мафию.\n"
-              "🗳 <b>Голосование</b> — игрок с наибольшим числом голосов выбывает.\n\n"
-              "🏆 <b>Победа:</b> город побеждает, если изгнаны все мафиози; "
-              "мафия побеждает, если её число сравнялось с мирными жителями.",
-        "en": "📜 <b>Game rules</b>\n\n"
-              "Every player secretly gets a role: <b>Townsperson</b>, "
-              "<b>Mafia</b>, or a special role (Detective, Doctor, etc.).\n\n"
-              "🌙 <b>Night</b> — special roles act in secret.\n"
-              "☀️ <b>Day</b> — everyone discusses and tries to find the mafia.\n"
-              "🗳 <b>Voting</b> — the player with the most votes is eliminated.\n\n"
-              "🏆 <b>Win:</b> the town wins once every mafia member is out; "
-              "the mafia wins once their numbers match the town's.",
-    },
+    'command_not_understood': {'uz': 'Bu buyruq topilmadi. Davom etish uchun pastdagi menyudan tanlang.',
+ 'ru': 'Команда не найдена. Выберите действие в меню ниже.',
+ 'en': 'Command not found. Choose an action from the menu below.'},
+    'about_body': {'uz': '🎭 <b>MAFIA · Ishonch va shubha o‘yini</b>\n'
+       '\n'
+       '4–20 kishi, tasodifiy rollar va har davrada yangi qaror. Tunda harakat qiling, kunduzi '
+       'dalillarni muhokama qiling.\n'
+       '\n'
+       '<b>Qayerdan boshlayman?</b>\n'
+       'Botni guruhga qo‘shing va <code>/start</code> yuboring. Rolingizning maqsadi ilovada '
+       'ko‘rsatiladi.\n'
+       '\n'
+       '<b>O‘zingizni sinab ko‘ring</b>\n'
+       'Ilovada botlar bilan mashq qiling yoki do‘stlaringizga qo‘shiling. Mashq reytingga ta’sir '
+       'qilmaydi.',
+ 'ru': '🎭 <b>MAFIA · Доверие и подозрения</b>\n'
+       '\n'
+       '4–20 игроков, случайные роли и новые решения в каждом раунде. Действуйте ночью, обсуждайте '
+       'улики днём.\n'
+       '\n'
+       '<b>С чего начать?</b>\n'
+       'Добавьте бота в группу и отправьте <code>/start</code>. Цель вашей роли появится в '
+       'приложении.\n'
+       '\n'
+       '<b>Попробуйте свои силы</b>\n'
+       'Тренируйтесь с ботами или играйте с друзьями. Тренировка не влияет на рейтинг.',
+ 'en': '🎭 <b>MAFIA · Trust and suspicion</b>\n'
+       '\n'
+       '4–20 players, random roles and a new decision each round. Act at night and discuss the '
+       'evidence by day.\n'
+       '\n'
+       '<b>Where do I start?</b>\n'
+       'Add the bot to a group and send <code>/start</code>. Your role’s goal appears in the app.\n'
+       '\n'
+       '<b>Try it out</b>\n'
+       'Practice with bots or join your friends. Practice does not affect rankings.'},
+    'rules_body': {'uz': '📖 <b>Birinchi davraga tayyormisiz?</b>\n'
+       '\n'
+       '<b>Rolingiz — siringiz.</b> O‘yin boshida rol tasodifiy beriladi. Uning maqsadi va '
+       'cheklovlarini o‘qib chiqing.\n'
+       '\n'
+       '<b>Tun.</b> Maxsus rollar yashirin harakat qiladi. Har bir Don alohida nishon tanlaydi.\n'
+       '\n'
+       '<b>Muhokama.</b> Kuzatganlaringizni ayting. Shubhangizni dalil bilan tushuntiring.\n'
+       '\n'
+       '<b>Ovoz.</b> Bir bosqichda bitta yakuniy ovoz. Ovozlar ochiq. Natijadan keyin hukmni '
+       'tasdiqlash bosqichi bo‘lishi mumkin.\n'
+       '\n'
+       '<b>G‘alaba.</b> Jamoa g‘alabasi tirik qolgan a’zolarga yoziladi. Mustaqil rollarning '
+       'shaxsiy maqsadi bor.\n'
+       '\n'
+       '<i>Batafsil maqsad va harakatlar — ilovadagi «Rollar» bo‘limida.</i>',
+ 'ru': '📖 <b>Готовы к первому раунду?</b>\n'
+       '\n'
+       '<b>Ваша роль — ваш секрет.</b> Роли выдаются случайно. Прочитайте цель и ограничения своей '
+       'роли.\n'
+       '\n'
+       '<b>Ночь.</b> Особые роли действуют скрытно. Каждый Дон выбирает отдельную цель.\n'
+       '\n'
+       '<b>Обсуждение.</b> Делитесь наблюдениями и объясняйте подозрения.\n'
+       '\n'
+       '<b>Голосование.</b> Один окончательный голос за раунд. Голоса открыты. После подсчёта '
+       'может потребоваться подтверждение приговора.\n'
+       '\n'
+       '<b>Победа.</b> Победа команды засчитывается её выжившим участникам. У независимых ролей '
+       'личные цели.\n'
+       '\n'
+       '<i>Подробности — в разделе «Роли» в приложении.</i>',
+ 'en': '📖 <b>Ready for your first round?</b>\n'
+       '\n'
+       '<b>Your role is your secret.</b> Roles are random. Read your goal and limits before '
+       'playing.\n'
+       '\n'
+       '<b>Night.</b> Special roles act privately. Each Don chooses an independent target.\n'
+       '\n'
+       '<b>Discussion.</b> Share observations and explain your suspicions.\n'
+       '\n'
+       '<b>Voting.</b> One final vote per round. Votes are public. A verdict confirmation may '
+       'follow the count.\n'
+       '\n'
+       '<b>Victory.</b> Only surviving faction members share a faction win. Independent roles have '
+       'personal goals.\n'
+       '\n'
+       '<i>Find detailed goals and actions in the app’s Roles section.</i>'},
     "help_body": {
         "uz": "❓ <b>Yordam</b>\n\n"
               "/start — bosh menyu\n"
@@ -288,47 +303,49 @@ MESSAGES: dict[str, dict[str, str]] = {
               "O'ynagan o'yinlar: <b>{games_played}</b>\n"
               "G'alabalar: <b>{wins}</b> ({win_rate}%)\n"
               "Mag'lubiyatlar: <b>{losses}</b>\n\n"
-              "🏙 Shahar g'alabalari: {town_wins}\n"
-              "🔫 Mafiya g'alabalari: {mafia_wins}\n"
-              "🎭 Neytral g'alabalari: {neutral_wins}",
+              "Shahar: {town_wins}\n"
+              "Mafiya: {mafia_wins}\n"
+              "Mustaqil rollar: {neutral_wins}",
         "ru": "📊 <b>Ваша статистика</b>\n\n"
               "Сыграно игр: <b>{games_played}</b>\n"
               "Побед: <b>{wins}</b> ({win_rate}%)\n"
               "Поражений: <b>{losses}</b>\n\n"
-              "🏙 Побед за Город: {town_wins}\n"
-              "🔫 Побед за Мафию: {mafia_wins}\n"
-              "🎭 Побед за Нейтралов: {neutral_wins}",
+              "Город: {town_wins}\n"
+              "Мафия: {mafia_wins}\n"
+              "Независимые роли: {neutral_wins}",
         "en": "📊 <b>Your stats</b>\n\n"
               "Games played: <b>{games_played}</b>\n"
               "Wins: <b>{wins}</b> ({win_rate}%)\n"
               "Losses: <b>{losses}</b>\n\n"
-              "🏙 Town wins: {town_wins}\n"
-              "🔫 Mafia wins: {mafia_wins}\n"
-              "🎭 Neutral wins: {neutral_wins}",
+              "Town: {town_wins}\n"
+              "Mafia: {mafia_wins}\n"
+              "Independent roles: {neutral_wins}",
     },
-    "roles_prompt": {
-        "uz": "Barcha rollar va ularning qobiliyatlari:",
-        "ru": "Все роли и их способности:",
-        "en": "Every role and its ability:",
-    },
+    'roles_prompt': {'uz': '🎭 <b>Har bir rolning o‘z vazifasi bor</b>\n'
+       '\n'
+       'Maqsad, tungi harakat va cheklovlarni ko‘rib chiqing.',
+ 'ru': '🎭 <b>У каждой роли своя задача</b>\n\nПосмотрите цель, ночное действие и ограничения.',
+ 'en': '🎭 <b>Every role has a purpose</b>\n\nExplore each goal, night action and limit.'},
     "roles_open_button": {
         "uz": "🎭 Rollarni ko'rish", "ru": "🎭 Смотреть роли", "en": "🎭 View roles",
     },
-    "profile_prompt": {
-        "uz": "Profilingizni oching:",
-        "ru": "Откройте свой профиль:",
-        "en": "Open your profile:",
-    },
+    'profile_prompt': {'uz': '<b>Sizning o‘yin yo‘lingiz</b>\n'
+       '\n'
+       'Natijalaringiz, g‘alabalaringiz va so‘nggi davralar — barchasi profilingizda.',
+ 'ru': '<b>Ваш путь в игре</b>\n\nРезультаты, победы и последние игры собраны в вашем профиле.',
+ 'en': '<b>Your game history</b>\n\nYour results, wins and recent rounds are all in your profile.'},
     "profile_open_button": {
         "uz": "👤 Profilim", "ru": "👤 Мой профиль", "en": "👤 My profile",
     },
-    "no_groups_known": {
-        "uz": "Hali hech qanday guruh topilmadi. Avval meni biror guruhga "
-              "admin qilib qo'shing.",
-        "ru": "Группы пока не найдены. Сначала добавьте меня администратором "
-              "в какую-нибудь группу.",
-        "en": "No groups found yet. First add me as an admin to a group.",
-    },
+    'no_groups_known': {'uz': '<b>Hali guruh qo‘shilmagan</b>\n'
+       '\n'
+       'Botni guruhingizga qo‘shing va u yerda /start yuboring. Keyin shu menyuga qayting.',
+ 'ru': '<b>Пока нет групп</b>\n'
+       '\n'
+       'Добавьте бота в группу и отправьте там /start. Затем вернитесь в это меню.',
+ 'en': '<b>No groups yet</b>\n'
+       '\n'
+       'Add the bot to a group and send /start there, then return to this menu.'},
     "no_matching_groups": {
         "uz": "Siz a'zo bo'lgan guruhlardan birortasida meni topa olmadim. "
               "Guruhga o'zingiz a'zo ekaningizga ishonch hosil qiling.",
@@ -337,11 +354,11 @@ MESSAGES: dict[str, dict[str, str]] = {
         "en": "I couldn't find myself in any group you're a member of. "
               "Make sure you're actually a member of that group.",
     },
-    "pick_a_group": {
-        "uz": "Qaysi guruhda o'yin boshlaymiz?",
-        "ru": "В какой группе начнём игру?",
-        "en": "Which group should we start the game in?",
-    },
+    'pick_a_group': {'uz': '🎭 <b>Bugun qayerda o‘ynaymiz?</b>\n'
+       '\n'
+       'Guruhni tanlang. O‘yin havolasi o‘sha guruhga yuboriladi.',
+ 'ru': '🎭 <b>Где играем сегодня?</b>\n\nВыберите группу. Ссылка на игру будет отправлена туда.',
+ 'en': '🎭 <b>Where are we playing today?</b>\n\nChoose a group. The game link will be sent there.'},
     "not_a_member_alert": {
         "uz": "Siz bu guruh a'zosi emassiz.",
         "ru": "Вы не состоите в этой группе.",
@@ -360,11 +377,13 @@ MESSAGES: dict[str, dict[str, str]] = {
     "sent_confirmation": {
         "uz": "✅ Yuborildi!", "ru": "✅ Отправлено!", "en": "✅ Sent!",
     },
-    "group_link_sent": {
-        "uz": "✅ Guruhga o'yin havolasi yuborildi.",
-        "ru": "✅ Ссылка на игру отправлена в группу.",
-        "en": "✅ Game link sent to the group.",
-    },
+    'group_link_sent': {'uz': '<b>Guruh tayyor</b>\n'
+       '\n'
+       'O‘yin havolasi yuborildi. Guruhga o‘ting va do‘stlaringizga qo‘shiling.',
+ 'ru': '<b>Группа готова</b>\n\nСсылка отправлена. Перейдите в группу и присоединяйтесь к друзьям.',
+ 'en': '<b>Your group is ready</b>\n'
+       '\n'
+       'The link has been sent. Open the group and join your friends.'},
     "open_group_button": {
         "uz": "\U0001F517 Guruhga o'tish",
         "ru": "\U0001F517 Перейти в группу",
